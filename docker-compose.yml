@@ -1,0 +1,22 @@
+---
+version: '2.1'
+services:
+  snapshooter:
+    build: .
+    image: snapshooter:dev
+    command:
+      - python
+      - snapshooter.py
+      - --dry_run
+      - "true"
+      - --config_file_location
+      - "./config.yml"
+    environment:
+      AWS_REGION: your_region
+      AWS_ACCESS_KEY_ID: your_access_key_id
+      AWS_SECRET_ACCESS_KEY: your_secret_access_key
+      AWS_OWNER_ID: your_owner_id
+    networks:
+      - local
+networks:
+  local:
