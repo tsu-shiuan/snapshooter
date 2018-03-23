@@ -17,19 +17,18 @@ def validate_aws_variables():
     return [aws_region, aws_owner_id]
 
 
-def get_removable_snapshots(snapshot_info, date_threshold, analysis_threshold, snapshot_dict):
+def get_removable_snapshots(snapshot_list, date_threshold, analysis_threshold):
     snapshot_ids_to_remove = []
-    for snapshot in snapshot_info['Snapshots']:
+    for snapshot in snapshot_list:
         snapshot_date = snapshot["StartTime"].date()
         # A snapshot is applicable for removal if it:
-        # 1) Falls out of the days_to_keep threshold
-        # 2) Falls within the days_to_analysis threshold
+        # 1) Falls within the days_to_analysis threshold
+        # 2) Falls out of the days_to_keep threshold
         # 3) If it is not the first day of the month (by default we keep 1 snapshot per month)
         # 4) If it exists in the whitelist given in the config.yml
-        if (snapshot_date < date_threshold and \
-            snapshot_date > analysis_threshold) and \
-            snapshot_date.day != 1 and \
-            snapshot["VolumeId"] in snapshot_dict.keys():
-            snapshot_ids_to_remove.append(snapshot["SnapshotId"])
+        if snapshot_date > analysis_threshold and \
+           snapshot_date <= date_threshold and \
+           snapshot_date.day != 1:
+              snapshot_ids_to_remove.append(snapshot["SnapshotId"])
 
     return snapshot_ids_to_remove
