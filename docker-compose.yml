@@ -7,10 +7,8 @@ services:
     command:
       - python
       - snapshooter.py
-      - --dry_run
-      - "true"
-      - --config_file_location
-      - "./config.yml"
+      - "--dry_run=true"
+      - "--config_file_location=./config.yml"
     environment:
       AWS_REGION: your_region
       AWS_ACCESS_KEY_ID: your_access_key_id

@@ -1,4 +1,6 @@
 # Add a config in the following format
 volume_info:
-  volume_id_1: "volume_id_1 description"
-  volume_id_2: "volume_id_2 description"
+  - id: "volume_id_1"
+    desc: "volume_id_1 description"
+  - id: "volume_id_2"
+    desc: "volume_id_2 description"
